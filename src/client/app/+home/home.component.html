@@ -1,0 +1,26 @@
+<p>
+  Know a phrase from a song but don't know the artist or title? Look it up here!
+</p>
+
+<form ngNoForm (submit)="searchLyrics()">
+  <input [(ngModel)]="searchText" placeholder="Search for lyrics">
+  <button type="submit">Search</button> &nbsp; <button (click)="clearSearch()">Clear</button>
+</form>
+
+<ul>
+  <li *ngFor="let song of songs">
+    <button (click)="addSong(song)">Add</button> &nbsp;<a target="_blank" href="{{song.SongUrl}}">{{song.Song}}</a> by <a target="_blank" href="{{song.ArtistUrl}}">{{song.Artist}}</a>
+  </li>
+</ul>
+
+<div *ngIf="savedSongs.length > 0">
+  <p>Saved Songs</p>
+  <ul>
+    <li *ngFor="let song of savedSongs">
+      <a target="_blank" href="{{song.SongUrl}}">{{song.Song}}</a> by <a target="_blank" href="{{song.ArtistUrl}}">{{song.Artist}}</a>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="errorMessage !== undefined">{{errorMessage}}</div>
+<br><br>
