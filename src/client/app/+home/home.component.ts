@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { REACTIVE_FORM_DIRECTIVES } from '@angular/forms/index';
 
-import { ChartLyricsService, SearchLyricResult } from '../shared/index';
+import { ChartLyricsService, SearchLyricResult, GetLyricResult } from '../shared/index';
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -16,6 +16,8 @@ import { ChartLyricsService, SearchLyricResult } from '../shared/index';
 
 export class HomeComponent {
 
+  showLyrics: boolean = false;
+  selectedSong: GetLyricResult = new GetLyricResult();
   savedSongs: SearchLyricResult[] = [];
   songs: SearchLyricResult[] = [];
   searchText: string;
@@ -45,6 +47,16 @@ export class HomeComponent {
   clearSearch() {
     this.songs = [];
     this.errorMessage = undefined;
+    this.showLyrics = false;
+  }
+
+  getLyrics(song: SearchLyricResult) {
+    this.showLyrics = true;
+    this.chartLyricsService.getLyrics(song.LyricId, song.LyricChecksum)
+                .subscribe(
+                  lyrics => this.selectedSong = lyrics,
+                  error =>  this.errorMessage = <any>error);
+    
   }
 
 }

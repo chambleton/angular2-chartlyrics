@@ -9,7 +9,8 @@
 
 <ul>
   <li *ngFor="let song of songs">
-    <button (click)="addSong(song)">Add</button> &nbsp;<a target="_blank" href="{{song.SongUrl}}">{{song.Song}}</a> by <a target="_blank" href="{{song.ArtistUrl}}">{{song.Artist}}</a>
+    <button (click)="addSong(song)">Add</button> &nbsp;<a target="_blank" href="{{song.SongUrl}}"><span [innerHTML]="song.Song"></span></a> by <a target="_blank" href="{{song.ArtistUrl}}"><span [innerHTML]="song.Artist"></span></a>
+<button (click)="getLyrics(song)">Lyrics</button>
   </li>
 </ul>
 
@@ -17,10 +18,15 @@
   <p>Saved Songs</p>
   <ul>
     <li *ngFor="let song of savedSongs">
-      <a target="_blank" href="{{song.SongUrl}}">{{song.Song}}</a> by <a target="_blank" href="{{song.ArtistUrl}}">{{song.Artist}}</a>
+      <a target="_blank" href="{{song.SongUrl}}"><span [innerHTML]="song.Song"></span></a> by <a target="_blank" href="{{song.ArtistUrl}}">{{song.Artist}}</a>
     </li>
   </ul>
 </div>
 
+<div *ngIf="showLyrics === true">
+  <p [innerHTML]="selectedSong.Lyric"></p>
+<div>
+
 <div *ngIf="errorMessage !== undefined">{{errorMessage}}</div>
 <br><br>
+

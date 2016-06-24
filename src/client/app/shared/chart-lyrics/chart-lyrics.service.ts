@@ -81,5 +81,40 @@ export class ChartLyricsService {
     return obj;
   }
 
+  public getLyrics(lyricId: number, lyricChecksum: string): Observable<GetLyricResult> {
+    var headers = new Headers();
+    headers.append('Accept', 'application/xml');    
+    return this.http.get('http://api.chartlyrics.com/apiv1.asmx/GetLyric?lyricId='+ lyricId +'&lyricCheckSum='+ lyricChecksum, {headers: headers})
+        .map(res => this.getLyricXmlToJson(res.text()));
+    }
+
+  // Changes XML to JSON
+  private getLyricXmlToJson(xmlText: any): any {  
+    xmlText = xmlText.replace(/[\n\r]/g, ' ');
+
+    var oParser: DOMParser = new DOMParser();
+    var xml: XMLDocument = oParser.parseFromString(xmlText, "text/xml");
+    var results: any = xml.getElementsByTagName("GetLyricResult");
+ 
+    // Create the return object
+    var obj:any = {};
+    
+    for(var i=0; i<results.length; i++) {
+      var elems = results.item(i).children;
+      var song: any = {};
+
+      for(var j=0; j<elems.length; j++) {
+        var elem: any = elems.item(j);
+        song[elem["tagName"]] = elem["innerHTML"];
+      }
+      
+      obj = song;    
+      obj["Lyric"] = obj["Lyric"].replace(/\s\s/g, '<br />'); 
+    }
+
+    return obj;
+  }
+
+
 }
 
