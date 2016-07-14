@@ -27,10 +27,11 @@
 
 <modal #modal>
     <modal-header [show-close]="false">
-        <h4 class="modal-title">{{selectedSong.LyricSong}}</h4>
+        <h4 class="modal-title">{{selectedSong.LyricSong}}<span style="float: right;">{{selectedSong.LyricArtist}}</span></h4>         
     </modal-header>
     <modal-body>
-        <p [innerHTML]="selectedSong.Lyric"></p>
+        <img style="float: right;" src="{{selectedSong.LyricCovertArtUrl}}" width="100px" height="100px" />
+        <p [innerHTML]="selectedSong.Lyric"></p>        
     </modal-body>
     <modal-footer>
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Close</button>        
