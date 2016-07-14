@@ -29,7 +29,7 @@ export function main() {
 
       let connection: any;
       backend.connections.subscribe((c: any) => connection = c);
-      initialResponse = chartLyricsService.get();
+      initialResponse = chartLyricsService.getLyrics(1234, "987654");
       connection.mockRespond(new Response(new ResponseOptions({ body: '["Dijkstra", "Hopper"]' })));
     });
 

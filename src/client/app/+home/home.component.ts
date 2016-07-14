@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { REACTIVE_FORM_DIRECTIVES } from '@angular/forms/index';
-
+import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { ChartLyricsService, SearchLyricResult, GetLyricResult } from '../shared/index';
 
 /**
@@ -11,11 +11,11 @@ import { ChartLyricsService, SearchLyricResult, GetLyricResult } from '../shared
   selector: 'sd-home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css'],
-  directives: [REACTIVE_FORM_DIRECTIVES]
+  directives: [REACTIVE_FORM_DIRECTIVES, MODAL_DIRECTIVES]
 })
 
 export class HomeComponent {
-
+  
   showLyrics: boolean = false;
   selectedSong: GetLyricResult = new GetLyricResult();
   savedSongs: SearchLyricResult[] = [];
@@ -55,8 +55,7 @@ export class HomeComponent {
     this.chartLyricsService.getLyrics(song.LyricId, song.LyricChecksum)
                 .subscribe(
                   lyrics => this.selectedSong = lyrics,
-                  error =>  this.errorMessage = <any>error);
-    
+                  error =>  this.errorMessage = <any>error);    
   }
 
 }

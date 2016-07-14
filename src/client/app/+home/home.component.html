@@ -1,7 +1,9 @@
 <p>
+  <br>
   Know a phrase from a song but don't know the artist or title? Look it up here!
 </p>
 
+<h3>Search by Lyrics</h3>
 <form ngNoForm (submit)="searchLyrics()">
   <input [(ngModel)]="searchText" placeholder="Search for lyrics">
   <button type="submit">Search</button> &nbsp; <button (click)="clearSearch()">Clear</button>
@@ -10,12 +12,12 @@
 <ul>
   <li *ngFor="let song of songs">
     <button (click)="addSong(song)">Add</button> &nbsp;<a target="_blank" href="{{song.SongUrl}}"><span [innerHTML]="song.Song"></span></a> by <a target="_blank" href="{{song.ArtistUrl}}"><span [innerHTML]="song.Artist"></span></a>
-<button (click)="getLyrics(song)">Lyrics</button>
+<button (click)="getLyrics(song); modal.open();">Lyrics</button>
   </li>
 </ul>
 
 <div *ngIf="savedSongs.length > 0">
-  <p>Saved Songs</p>
+  <h3>Saved Songs</h3>
   <ul>
     <li *ngFor="let song of savedSongs">
       <a target="_blank" href="{{song.SongUrl}}"><span [innerHTML]="song.Song"></span></a> by <a target="_blank" href="{{song.ArtistUrl}}">{{song.Artist}}</a>
@@ -23,10 +25,23 @@
   </ul>
 </div>
 
+<modal #modal>
+    <modal-header [show-close]="false">
+        <h4 class="modal-title">{{selectedSong.LyricSong}}</h4>
+    </modal-header>
+    <modal-body>
+        <p [innerHTML]="selectedSong.Lyric"></p>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Close</button>        
+    </modal-footer>
+</modal>
+<!--
+  <button type="button" class="btn btn-default" (click)="modal.open()">Open me!</button>
+
 <div *ngIf="showLyrics === true">
   <p [innerHTML]="selectedSong.Lyric"></p>
 <div>
-
+-->
 <div *ngIf="errorMessage !== undefined">{{errorMessage}}</div>
 <br><br>
-
